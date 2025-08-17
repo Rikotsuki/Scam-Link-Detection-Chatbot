@@ -18,6 +18,7 @@ import {
   Clock
 } from 'lucide-react'
 import Image from 'next/image'
+import { useLoading } from '@/hooks/use-loading'
 
 // Simplified mascot info without selection state
 const mascotFeatures = {
@@ -115,6 +116,8 @@ const MascotCard: React.FC<{
 }
 
 export const MascotShowcase = () => {
+  const { isLoading } = useLoading()
+  
   const openAiChat = () => {
     console.log('Opening AI chat...')
   }
@@ -139,9 +142,9 @@ export const MascotShowcase = () => {
           <motion.h2 
             className="text-4xl lg:text-5xl font-bold mb-6 text-center relative"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
           >
             Meet Your{' '}
             <span className="text-foreground relative inline-block">
@@ -191,6 +194,7 @@ export const MascotShowcase = () => {
                   src="/images/AiandHaru.png"
                   alt="Ai and Haru - Your Digital Guardians"
                   fill
+                  sizes="(max-width: 768px) 100vw"
                   className="object-contain"
                   priority
                 />

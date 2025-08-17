@@ -120,7 +120,7 @@ const FeatureCard = ({ feature, index }: { feature: typeof features[0], index: n
 
 export const Features = () => {
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-background to-muted/20">
+    <section id="features" className="py-24 px-4 bg-gradient-to-b from-background to-muted/20">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div

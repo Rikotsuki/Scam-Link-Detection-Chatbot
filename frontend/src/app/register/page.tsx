@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -40,11 +41,13 @@ import {
   Check,
   AlertCircle
 } from 'lucide-react'
+import { GradientAnimatedDottedLine } from '@/components/animated-dotted-line'
+import { authApi } from '@/lib/api'
 
 interface RegisterFormData {
   firstName: string
   lastName: string
-  username: string
+  userName: string
   email: string
   password: string
   confirmPassword: string
@@ -97,12 +100,14 @@ export default function RegisterPage() {
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [passwordStrength, setPasswordStrength] = useState({ score: 0, feedback: [] as string[] })
   const [currentStep, setCurrentStep] = useState(1)
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
   
   const form = useForm<RegisterFormData>({
     defaultValues: {
       firstName: '',
       lastName: '',
-      username: '',
+      userName: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -121,14 +126,39 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true)
+    setError(null)
     console.log('Analytics: auth_signup_attempt')
     
-    // Simulate registration
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    console.log('Registration successful:', data)
-    setIsLoading(false)
-    setShowOnboarding(true)
+    try {
+      const result = await authApi.register({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        userName: data.userName,
+        email: data.email,
+        password: data.password
+      })
+      
+      if (result.error) {
+        setError(result.error)
+      } else {
+        // Store token
+        localStorage.setItem('token', result.data?.token || '')
+        localStorage.setItem('user', JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          userName: data.userName,
+          email: data.email
+        }))
+        
+        console.log('Registration successful:', result.data)
+        setIsLoading(false)
+        setShowOnboarding(true)
+      }
+    } catch (err) {
+      setError('Network error. Please try again.')
+      console.error('Registration error:', err)
+      setIsLoading(false)
+    }
   }
 
   const nextStep = () => {
@@ -226,6 +256,17 @@ export default function RegisterPage() {
           </CardHeader>
 
           <CardContent className="space-y-2">
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-2 text-destructive"
+              >
+                <AlertCircle className="w-4 h-4" />
+                <span className="text-sm">{error}</span>
+              </motion.div>
+            )}
+            
             {/* Progress Indicator */}
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
@@ -238,7 +279,16 @@ export default function RegisterPage() {
                   Account Details
                 </span>
               </div>
-              <div className="flex-1 mx-4 h-px bg-border"></div>
+              <div className="flex-1 mx-4 relative">
+                <div className="h-px bg-border"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <GradientAnimatedDottedLine 
+                    dots={8} 
+                    duration={3}
+                    className="opacity-60"
+                  />
+                </div>
+              </div>
               <div className="flex items-center gap-2">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                   currentStep >= 2 ? 'bg-primary text-white' : 'bg-muted text-muted-foreground'
@@ -324,7 +374,7 @@ export default function RegisterPage() {
                       {/* Username */}
                       <FormField
                         control={form.control}
-                        name="username"
+                        name="userName"
                         rules={{
                           required: 'Username is required',
                           minLength: {
@@ -340,14 +390,16 @@ export default function RegisterPage() {
                             message: 'Username can only contain letters, numbers, and underscores'
                           },
                           validate: (value) => {
-                            if (value && value.startsWith('_')) {
-                              return 'Username cannot start with an underscore'
-                            }
-                            if (value && value.endsWith('_')) {
-                              return 'Username cannot end with an underscore'
-                            }
-                            if (value && /_{2,}/.test(value)) {
-                              return 'Username cannot contain consecutive underscores'
+                            if (typeof value === 'string') {
+                              if (value.startsWith('_')) {
+                                return 'Username cannot start with an underscore'
+                              }
+                              if (value.endsWith('_')) {
+                                return 'Username cannot end with an underscore'
+                              }
+                              if (/_{2,}/.test(value)) {
+                                return 'Username cannot contain consecutive underscores'
+                              }
                             }
                             return true
                           }

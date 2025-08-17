@@ -9,6 +9,8 @@ import { Badge } from '@/components/ui/badge'
 import { Shield, Search, MessageCircle, AlertTriangle, CheckCircle, XCircle, Bot, Heart, Loader2, ArrowRight } from 'lucide-react'
 
 import { DualImageAvatar } from '@/components/image-avatar'
+import { GradientAnimatedDottedLine } from '@/components/animated-dotted-line'
+import { useLoading } from '@/hooks/use-loading'
 
 // Scanner Result Component
 interface ScanResult {
@@ -109,6 +111,7 @@ export const Hero = () => {
   const [scanResult, setScanResult] = useState<ScanResult | null>(null)
   const [showChatAi, setShowChatAi] = useState(false)
   const [showChatHaru, setShowChatHaru] = useState(false)
+  const { isLoading } = useLoading()
 
   const handleScan = async () => {
     if (!scanUrl.trim()) return
@@ -164,19 +167,63 @@ export const Hero = () => {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
       
+      {/* Hero-specific background animations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-pink-500/5 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.7, 0.4],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-24 h-24 bg-purple-500/5 rounded-full blur-2xl"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 4
+          }}
+        />
+      </div>
+      
       <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="space-y-8"
+          className="space-y-8 order-1 lg:order-1"
         >
           <div className="space-y-6">
             <motion.h1 
-              className="text-5xl lg:text-7xl font-bold tracking-tight animate-fade-in-up relative"
+              className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight animate-fade-in-up relative text-center lg:text-left"
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <span className="text-foreground relative">
@@ -186,18 +233,20 @@ export const Hero = () => {
             </motion.h1>
             
             <motion.p 
-              className="text-xl lg:text-2xl text-muted-foreground max-w-2xl"
+              className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl text-center lg:text-left mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               Instantly check links. Recover accounts. Stay safe.
             </motion.p>
             
             <motion.p 
-              className="text-base lg:text-lg text-muted-foreground max-w-2xl"
+              className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl text-center lg:text-left mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               AI-powered scam detection and step-by-step recovery guidance for Myanmar. 
@@ -209,7 +258,8 @@ export const Hero = () => {
           <motion.div 
             className="space-y-6"
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             {/* Protection Stats Dashboard */}
@@ -320,8 +370,9 @@ export const Hero = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{ delay: 0.2 }}
                 whileHover={{ scale: 1.02 }}
               >
                 <Card className="p-6 h-full bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20 hover:border-primary/40 transition-all duration-300 cursor-pointer group">
@@ -345,8 +396,9 @@ export const Hero = () => {
 
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.4 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{ delay: 0.4 }}
                 whileHover={{ scale: 1.02 }}
               >
                 <Card className="p-6 h-full bg-gradient-to-br from-secondary/5 to-secondary/10 border-secondary/20 hover:border-secondary/40 transition-all duration-300 cursor-pointer group">
@@ -372,8 +424,9 @@ export const Hero = () => {
             {/* Live Activity Feed */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-50px" }}
+              transition={{ delay: 0.2 }}
             >
               <Card className="p-4 border-border/40">
                 <div className="space-y-3">
@@ -389,8 +442,9 @@ export const Hero = () => {
                     <motion.div 
                       className="flex items-center gap-3 p-2 rounded-lg bg-green-500/10"
                       initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 2 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: false, margin: "-50px" }}
+                      transition={{ delay: 0.2 }}
                     >
                       <CheckCircle className="w-4 h-4 text-green-500" />
                       <span className="text-sm">247 threats blocked today</span>
@@ -399,8 +453,9 @@ export const Hero = () => {
                     <motion.div 
                       className="flex items-center gap-3 p-2 rounded-lg bg-blue-500/10"
                       initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 2.2 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: false, margin: "-50px" }}
+                      transition={{ delay: 0.4 }}
                     >
                       <Bot className="w-4 h-4 text-blue-500" />
                       <span className="text-sm">AI guardians helped 1,234 users</span>
@@ -409,8 +464,9 @@ export const Hero = () => {
                     <motion.div 
                       className="flex items-center gap-3 p-2 rounded-lg bg-purple-500/10"
                       initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 2.4 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: false, margin: "-50px" }}
+                      transition={{ delay: 0.6 }}
                     >
                       <Heart className="w-4 h-4 text-purple-500" />
                       <span className="text-sm">15 accounts successfully recovered</span>
@@ -425,8 +481,9 @@ export const Hero = () => {
           <motion.div 
             className="flex items-center gap-4 text-sm text-muted-foreground"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4" />
@@ -442,14 +499,15 @@ export const Hero = () => {
         {/* Right Content - AI & Haru Avatars */}
         <motion.div 
           initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, margin: "-100px" }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="lg:block"
+          className="order-2 lg:order-2"
         >
-          <Card className="p-8 shadow-2xl border-border/40 dark:border-border/60">
-            <div className="text-center mb-6">
-              <h3 className="text-lg font-semibold mb-2">Meet Your Guardians</h3>
-              <p className="text-sm text-muted-foreground">
+          <Card className="p-4 sm:p-6 lg:p-8 shadow-2xl border-border/40 dark:border-border/60">
+            <div className="text-center mb-4 sm:mb-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-2">Meet Your Guardians</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">
                 AI-powered assistants ready to protect and guide you
               </p>
             </div>
@@ -460,18 +518,18 @@ export const Hero = () => {
             />
 
             {/* Guardian Info */}
-            <div className="grid grid-cols-2 gap-4 mt-6">
-              <div className="text-center p-3 rounded-lg bg-pink-500/5 dark:bg-pink-500/10">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Bot className="w-4 h-4 text-pink-500" />
-                  <span className="font-semibold text-sm">Ai</span>
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
+              <div className="text-center p-2 sm:p-3 rounded-lg bg-pink-500/5 dark:bg-pink-500/10">
+                <div className="flex items-center justify-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+                  <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-pink-500" />
+                  <span className="font-semibold text-xs sm:text-sm">Ai</span>
                 </div>
                 <p className="text-xs text-muted-foreground">Scam Detection</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-blue-500/5 dark:bg-blue-500/10">
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Heart className="w-4 h-4 text-blue-500" />
-                  <span className="font-semibold text-sm">Haru</span>
+              <div className="text-center p-2 sm:p-3 rounded-lg bg-blue-500/5 dark:bg-blue-500/10">
+                <div className="flex items-center justify-center gap-1 sm:gap-2 mb-1 sm:mb-2">
+                  <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500" />
+                  <span className="font-semibold text-xs sm:text-sm">Haru</span>
                 </div>
                 <p className="text-xs text-muted-foreground">Recovery Support</p>
               </div>

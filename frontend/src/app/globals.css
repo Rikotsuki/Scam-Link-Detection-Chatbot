@@ -1,5 +1,111 @@
 @import "tailwindcss";
 
+/* Custom cursor styles - only on desktop */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Show default cursor for mobile/touch devices */
+@media (hover: none) and (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* Ensure animations work properly with custom cursor */
+.motion-safe\:animate-* {
+  z-index: 1;
+}
+
+/* Ensure viewport animations trigger properly */
+[data-framer-motion] {
+  will-change: transform, opacity;
+}
+
+/* Ensure mobile scrolling works */
+html, body {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Fix for mobile touch scrolling */
+@media (hover: none) and (pointer: coarse) {
+  html, body {
+    cursor: auto !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Allow scrolling on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Force dark mode scrollbar override */
+html.dark ::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb) !important;
+  border: none !important;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover) !important;
+}
+
+/* Additional dark mode selectors */
+body.dark ::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb) !important;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb) !important;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+html.dark * {
+  scrollbar-color: var(--scrollbar-thumb) transparent !important;
+}
+
+body.dark * {
+  scrollbar-color: var(--scrollbar-thumb) transparent !important;
+}
+
+.dark * {
+  scrollbar-color: var(--scrollbar-thumb) transparent !important;
+}
+
 :root {
   --background: rgb(248, 250, 252);
   --foreground: rgb(17, 25, 39);
@@ -47,6 +153,8 @@
   --shadow-2xl: 0px 2px 4px 0px hsl(0 0% 0% / 0.25);
   --tracking-normal: 0rem;
   --spacing: 0.25rem;
+  --scrollbar-thumb: rgb(142, 197, 255);
+  --scrollbar-thumb-hover: rgb(120, 180, 240);
 }
 
 .dark {
@@ -94,6 +202,8 @@
   --shadow-lg: 0px 2px 4px 0px hsl(0 0% 0% / 0.10), 0px 4px 6px -1px hsl(0 0% 0% / 0.10);
   --shadow-xl: 0px 2px 4px 0px hsl(0 0% 0% / 0.10), 0px 8px 10px -1px hsl(0 0% 0% / 0.10);
   --shadow-2xl: 0px 2px 4px 0px hsl(0 0% 0% / 0.25);
+  --scrollbar-thumb: rgb(232, 118, 152);
+  --scrollbar-thumb-hover: rgb(220, 100, 140);
 }
 
 @theme inline {
@@ -319,6 +429,45 @@ p, span, div {
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+}
+
+/* Dark mode nav link hover effects */
+.dark nav a:hover,
+.dark .nav-link:hover,
+.dark [role="navigation"] a:hover,
+.dark .navbar a:hover,
+.dark .navigation a:hover {
+  color: rgb(232, 118, 152) !important; /* Pink color */
+  transition: color 0.3s ease;
+}
+
+/* Dark mode nav link active states */
+.dark nav a.active,
+.dark .nav-link.active,
+.dark [role="navigation"] a.active,
+.dark .navbar a.active,
+.dark .navigation a.active {
+  color: rgb(232, 118, 152) !important; /* Pink color */
+}
+
+/* Dark mode nav link focus states */
+.dark nav a:focus,
+.dark .nav-link:focus,
+.dark [role="navigation"] a:focus,
+.dark .navbar a:focus,
+.dark .navigation a:focus {
+  color: rgb(232, 118, 152) !important; /* Pink color */
+  outline: 2px solid rgb(232, 118, 152);
+  outline-offset: 2px;
+}
+
+/* Ensure the hover effect works with Tailwind classes */
+.dark .text-muted-foreground:hover {
+  color: rgb(232, 118, 152) !important;
+}
+
+.dark .hover\:text-primary:hover {
+  color: rgb(232, 118, 152) !important;
 }
 
 /* Custom gradient backgrounds */

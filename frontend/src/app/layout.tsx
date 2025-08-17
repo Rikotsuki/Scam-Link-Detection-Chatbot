@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
+import { ClientLayout } from "@/components/client-layout";
 
 const quicksand = Quicksand({
   variable: "--font-sans",
@@ -59,8 +60,10 @@ export default function RootLayout({
               try {
                 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                   document.documentElement.classList.add('dark')
+                  document.body.classList.add('dark')
                 } else {
                   document.documentElement.classList.remove('dark')
+                  document.body.classList.remove('dark')
                 }
               } catch (_) {}
             `,
@@ -68,10 +71,12 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${quicksand.variable} font-sans antialiased`}
+        className={`${quicksand.variable} font-sans antialiased cursor-none`}
         suppressHydrationWarning
       >
-        {children}
+        <ClientLayout>
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );

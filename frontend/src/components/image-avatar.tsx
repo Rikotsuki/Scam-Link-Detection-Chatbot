@@ -77,6 +77,7 @@ export const ImageAvatar: React.FC<ImageAvatarProps> = ({
               src={currentMascot.imagePath}
               alt={`${currentMascot.name} Avatar`}
               fill
+              sizes="(max-width: 768px) 100vw"
               className="object-cover"
               onError={handleImageError}
               priority
@@ -206,16 +207,16 @@ export const DualImageAvatar: React.FC<DualImageAvatarProps> = ({
 
       {/* 3D Model Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
           className="space-y-6"
-        >
-          <ImageAvatar 
-            mascotType="ai" 
-            onClick={onAiClick}
-          />
+      >
+        <ImageAvatar 
+          mascotType="ai" 
+          onClick={onAiClick}
+        />
           <div className="text-center">
             <Button
               variant="outline"
@@ -227,18 +228,18 @@ export const DualImageAvatar: React.FC<DualImageAvatarProps> = ({
               Chat with Ai
             </Button>
           </div>
-        </motion.div>
-        
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+      </motion.div>
+      
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
           className="space-y-6"
-        >
-          <ImageAvatar 
-            mascotType="haru" 
-            onClick={onHaruClick}
-          />
+      >
+        <ImageAvatar 
+          mascotType="haru" 
+          onClick={onHaruClick}
+        />
           <div className="text-center">
             <Button
               variant="outline"
@@ -250,7 +251,7 @@ export const DualImageAvatar: React.FC<DualImageAvatarProps> = ({
               Chat with Haru
             </Button>
           </div>
-        </motion.div>
+      </motion.div>
       </div>
     </div>
   )

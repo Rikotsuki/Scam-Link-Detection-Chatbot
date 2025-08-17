@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,8 +26,10 @@ import {
   EyeOff, 
   ArrowLeft,
   Chrome,
-  CheckCircle
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react'
+import { authApi } from '@/lib/api'
 
 interface LoginFormData {
   email: string
@@ -36,6 +39,8 @@ interface LoginFormData {
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
   
   const form = useForm<LoginFormData>({
     defaultValues: {
@@ -46,23 +51,37 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true)
+    setError(null)
     console.log('Analytics: auth_signin_attempt')
     
-    // Simulate login
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    // Mock validation
-    if (data.email === 'demo@phishguard.com' && data.password === 'demo123') {
-      // Success - would redirect to dashboard
-      console.log('Login successful:', data)
-    } else {
-      form.setError('password', {
-        type: 'manual',
-        message: 'Invalid email or password'
-      })
+    try {
+      const result = await authApi.login(data)
+      
+      if (result.error) {
+        setError(result.error)
+        form.setError('password', {
+          type: 'manual',
+          message: result.error
+        })
+      } else {
+        // Store token
+        localStorage.setItem('token', result.data?.token || '')
+        localStorage.setItem('user', JSON.stringify({
+          email: data.email,
+          // Add other user data as needed
+        }))
+        
+        console.log('Login successful:', result.data)
+        
+        // Redirect to dashboard
+        router.push('/dashboard')
+      }
+    } catch (err) {
+      setError('Network error. Please try again.')
+      console.error('Login error:', err)
+    } finally {
+      setIsLoading(false)
     }
-    
-    setIsLoading(false)
   }
 
   return (
@@ -123,6 +142,17 @@ export default function LoginPage() {
           </CardHeader>
 
           <CardContent className="space-y-6">
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-2 text-destructive"
+              >
+                <AlertCircle className="w-4 h-4" />
+                <span className="text-sm">{error}</span>
+              </motion.div>
+            )}
+            
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 {/* Email Field */}
