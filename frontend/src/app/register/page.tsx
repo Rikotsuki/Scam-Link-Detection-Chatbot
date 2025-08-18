@@ -139,7 +139,11 @@ export default function RegisterPage() {
       })
       
       if (result.error) {
-        setError(result.error)
+        // Ensure error is always a string
+        const errorMessage = typeof result.error === 'string' 
+          ? result.error 
+          : (result.error as any)?.msg || (result.error as any)?.message || 'An error occurred during registration'
+        setError(errorMessage)
       } else {
         // Store token
         localStorage.setItem('token', result.data?.token || '')
@@ -164,7 +168,7 @@ export default function RegisterPage() {
   const nextStep = () => {
     if (currentStep === 1) {
       // Validate step 1 fields
-      const step1Fields = ['firstName', 'lastName', 'username']
+      const step1Fields = ['firstName', 'lastName', 'userName']
       const step1Valid = step1Fields.every(field => {
         const value = form.getValues(field as keyof RegisterFormData)
         return value && value.toString().length > 0
@@ -263,7 +267,7 @@ export default function RegisterPage() {
                 className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-2 text-destructive"
               >
                 <AlertCircle className="w-4 h-4" />
-                <span className="text-sm">{error}</span>
+                <span className="text-sm">{String(error)}</span>
               </motion.div>
             )}
             

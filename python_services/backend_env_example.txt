@@ -1,6 +1,7 @@
+# Copy this content to: ../backend/.env
 # Required Environment Variables
 JWT_SECRET="bgOSiM/GjwBbKb+H3TMMXN/yMlvbNZtxuzAk3ndEkTo="
 PYTHON_SERVICE_URL="http://localhost:8000"
-
+ 
 # Optional Environment Variables
-# URLHAUS_AUTH_KEY="your-urlhaus-api-key-here"
+# URLHAUS_AUTH_KEY="your-urlhaus-api-key-here" 

@@ -1,0 +1,6 @@
+# Copy this content to: .env (in python_services directory)
+# Optional: URLhaus API Key for enhanced threat detection
+# Get your free API key from: https://urlhaus.abuse.ch/api/
+URLHAUS_AUTH_KEY="your-urlhaus-api-key-here"
+ 
+# Note: The system will work without URLhaus, but with enhanced features if provided 
