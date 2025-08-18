@@ -102,7 +102,7 @@ export const phishguardApi = {
     });
   },
 
-  // Chat with the bot
+  // Chat with the bot (simple keyword-based responses)
   chatWithBot: async (message: string, userId?: string, sessionId?: string) => {
     return apiCall<{
       response: string;

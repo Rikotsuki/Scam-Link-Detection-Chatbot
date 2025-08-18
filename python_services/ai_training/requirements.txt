@@ -1,0 +1,70 @@
+# AI Training Requirements for PhishGuard - Updated for 2024
+# Core AI/ML dependencies with latest versions
+
+# Ollama integration
+ollama==0.1.7
+
+# LangChain 0.3+ for RAG and chat (latest version)
+langchain==0.3.0
+langchain-community==0.3.0
+langchain-core==0.3.0
+langchain-openai==0.1.0
+langchain-ollama==0.1.0
+
+# Vector database for embeddings
+chromadb==0.4.22
+faiss-cpu==1.7.4
+
+# Data processing and training (latest stable versions)
+pandas==2.2.0
+numpy==1.26.4
+scikit-learn==1.4.0
+datasets==2.17.0
+transformers==4.38.2
+torch==2.2.0
+accelerate==0.27.2
+peft==0.10.0
+trl==0.8.1
+
+# Text processing
+nltk==3.8.1
+spacy==3.7.4
+textblob==0.17.1
+
+# Web scraping for dataset collection
+beautifulsoup4==4.12.3
+selenium==4.17.2
+requests-html==0.10.0
+aiohttp==3.9.3
+
+# Data validation
+pydantic==2.6.1
+marshmallow==3.20.2
+
+# Logging and monitoring
+loguru==0.7.2
+wandb==0.16.3
+
+# Utilities
+tqdm==4.66.2
+python-dotenv==1.0.1
+click==8.1.7
+rich==13.7.0
+asyncio-throttle==1.0.2
+
+# Development
+jupyter==1.0.0
+ipykernel==6.29.2
+
+# Additional AI/ML tools
+sentence-transformers==2.5.1
+openai==1.12.0
+anthropic==0.18.1
+
+# Performance optimization
+bitsandbytes==0.42.0
+flash-attn==2.6.1
+
+# Security and validation
+cryptography==42.0.2
+certifi==2024.2.2 

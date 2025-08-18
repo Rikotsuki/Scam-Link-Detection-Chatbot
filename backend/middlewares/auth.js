@@ -1,4 +1,5 @@
 import pkg from "jsonwebtoken";
+import { config } from "../config.js";
 const { verify } = pkg;
 
 export const verifyToken = (req, res, next) => {
@@ -9,7 +10,7 @@ export const verifyToken = (req, res, next) => {
   }
   
   try {
-    const decoded = verify(token, process.env.JWT_SECRET);
+    const decoded = verify(token, config.JWT_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
@@ -23,7 +24,7 @@ export const optionalAuth = (req, res, next) => {
   
   if (token) {
     try {
-      const decoded = verify(token, process.env.JWT_SECRET);
+      const decoded = verify(token, config.JWT_SECRET);
       req.user = decoded;
     } catch (error) {
       // Token is invalid, but we'll continue without user info

@@ -33,6 +33,7 @@ import {
   EyeOff
 } from 'lucide-react';
 import { phishguardApi } from '@/lib/api';
+import ProtectedScanner from '@/components/protected-scanner';
 
 interface AnalysisResult {
   url: string;
@@ -235,16 +236,7 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <Card className="shadow-lg border-0">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Search className="w-5 h-5" />
-                    URL Scanner
-                  </CardTitle>
-                  <CardDescription>
-                    Analyze any URL for phishing threats and security risks
-                  </CardDescription>
-                </CardHeader>
+              <ProtectedScanner />
                 <CardContent className="space-y-4">
                   <div className="flex gap-2">
                     <Input
@@ -341,23 +333,23 @@ export default function DashboardPage() {
             >
               <Card className="shadow-lg border-0">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MessageCircle className="w-5 h-5" />
-                    AI Assistant
-                  </CardTitle>
-                  <CardDescription>
-                    Ask questions about phishing protection and get instant help
-                  </CardDescription>
+                                  <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="w-5 h-5" />
+                  Help Assistant
+                </CardTitle>
+                <CardDescription>
+                  Get help with phishing protection and safety tips
+                </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex gap-2">
-                    <Input
-                      placeholder="Ask about phishing protection..."
-                      value={chatMessage}
-                      onChange={(e) => setChatMessage(e.target.value)}
-                      onKeyPress={(e) => e.key === 'Enter' && handleChat()}
-                      className="flex-1"
-                    />
+                                      <Input
+                    placeholder="Ask for help or safety tips..."
+                    value={chatMessage}
+                    onChange={(e) => setChatMessage(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleChat()}
+                    className="flex-1"
+                  />
                     <Button onClick={handleChat} disabled={!chatMessage.trim()}>
                       Send
                     </Button>

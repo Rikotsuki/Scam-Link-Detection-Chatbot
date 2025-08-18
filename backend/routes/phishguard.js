@@ -1,11 +1,12 @@
 import { Router } from "express";
 import axios from "axios";
 import { verifyToken, optionalAuth } from "../middlewares/auth.js";
+import { config } from "../config.js";
 
 const phishguardRoutes = Router();
 
 // Python service base URL
-const PYTHON_SERVICE_URL = process.env.PYTHON_SERVICE_URL || "http://localhost:8000";
+const PYTHON_SERVICE_URL = config.PYTHON_SERVICE_URL;
 
 // Analyze URL endpoint
 phishguardRoutes.post('/analyze', verifyToken, async (req, res) => {

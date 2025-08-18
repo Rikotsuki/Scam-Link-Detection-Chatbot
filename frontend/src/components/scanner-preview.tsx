@@ -202,26 +202,31 @@ export const ScannerPreview = () => {
   console.log('Current state:', { isDarkMode, isAi, assistantName, htmlClass: document.documentElement.className })
 
   const handleAnalyzeUrl = async () => {
+    // This is just a demo - no real analysis
     if (!url.trim()) return;
 
     setIsAnalyzing(true);
     setAnalysisResult(null);
     setError(null);
 
-    try {
-      const result = await phishguardApi.analyzeUrl(url);
-      
-      if (result.error) {
-        setError(result.error);
-      } else {
-        setAnalysisResult(result.data);
-      }
-    } catch (error) {
-      setError('Network error. Please try again.');
-      console.error('Analysis error:', error);
-    } finally {
-      setIsAnalyzing(false);
-    }
+    // Simulate analysis delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Show demo result
+    setAnalysisResult({
+      url: url,
+      is_suspicious: Math.random() > 0.5,
+      threat_level: Math.random() > 0.5 ? 'high' : 'safe',
+      message: Math.random() > 0.5 
+        ? "This appears to be a suspicious link. Please be cautious." 
+        : "This link appears to be safe.",
+      confidence: 0.85,
+      detection_methods: ['demo'],
+      warnings: Math.random() > 0.5 ? ['Demo warning: This is just a preview'] : [],
+      analysis_time: 1.5
+    });
+
+    setIsAnalyzing(false);
   };
 
   const handleChat = async () => {
@@ -230,31 +235,31 @@ export const ScannerPreview = () => {
     const userMessage = chatMessage;
     setChatMessage('');
 
-    try {
-      const result = await phishguardApi.chatWithBot(userMessage);
-      
-      if (result.data) {
-        const newChatMessage = {
-          id: Date.now().toString(),
-          sender: 'user',
-          message: userMessage,
-          timestamp: new Date().toLocaleTimeString()
-        };
-        
-        const aiResponse = {
-          id: (Date.now() + 1).toString(),
-          sender: isAi ? 'ai' : 'haru',
-          message: result.data.response,
-          timestamp: new Date().toLocaleTimeString(),
-          confidence: result.data.confidence,
-          suggestions: result.data.suggestions
-        };
-        
-        setChatHistory(prev => [aiResponse, newChatMessage, ...prev]);
-      }
-    } catch (error) {
-      console.error('Chat error:', error);
-    }
+    // Demo responses
+    const demoResponses = [
+      "This is a demo chat. In the real app, I would help you with phishing protection!",
+      "Demo: I can help you check URLs and provide safety tips.",
+      "This is just a preview. Sign up to access the real AI assistant!",
+      "Demo mode: I'm here to show you how the chat would work."
+    ];
+
+    const newChatMessage = {
+      id: Date.now().toString(),
+      sender: 'user',
+      message: userMessage,
+      timestamp: new Date().toLocaleTimeString()
+    };
+    
+    const demoResponse = {
+      id: (Date.now() + 1).toString(),
+      sender: isAi ? 'ai' : 'haru',
+      message: demoResponses[Math.floor(Math.random() * demoResponses.length)],
+      timestamp: new Date().toLocaleTimeString(),
+      confidence: 0.9,
+      suggestions: ['Sign up for real access', 'Try the URL scanner']
+    };
+    
+    setChatHistory(prev => [demoResponse, newChatMessage, ...prev]);
   };
 
   const copyToClipboard = (text: string) => {
@@ -299,7 +304,7 @@ export const ScannerPreview = () => {
               <span className="text-xs font-medium">{assistantName}</span>
             </div>
             <p className="text-sm">
-              Hi! I'm {assistantName}, your scam detection assistant. Paste a suspicious link or tell me what happened.
+              Hi! I'm {assistantName}, your scam detection assistant. I can help you with safety tips and basic guidance.
             </p>
             <p className="text-xs opacity-70 mt-1">{new Date().toLocaleTimeString()}</p>
           </div>
@@ -346,7 +351,7 @@ export const ScannerPreview = () => {
       {/* Chat input */}
       <div className="flex gap-2">
         <Input
-          placeholder={`Type your message to ${assistantName}...`}
+          placeholder={`Ask for help or safety tips...`}
           value={chatMessage}
           onChange={(e) => setChatMessage(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleChat()}
@@ -547,7 +552,7 @@ export const ScannerPreview = () => {
                   </TabsTrigger>
                   <TabsTrigger value="chat" className="flex items-center gap-2">
                     <Bot className="w-4 h-4" />
-                    <span className="hidden sm:inline">Chat (AI)</span>
+                    <span className="hidden sm:inline">Help Assistant</span>
                   </TabsTrigger>
                 </TabsList>
                 
