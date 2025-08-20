@@ -1,9 +1,0 @@
-# Copy this content to: ../frontend/.env.local
-# Required Environment Variables
-JWT_SECRET="bgOSiM/GjwBbKb+H3TMMXN/yMlvbNZtxuzAk3ndEkTo="
-NEXT_PUBLIC_BASE_URL="http://localhost:3000"
- 
-# Optional Environment Variables (for enhanced features)
-# URLHAUS_AUTH_KEY="your-urlhaus-api-key-here"
-# NEXT_PUBLIC_TURNSTILE_SITE_KEY="your-turnstile-site-key"
-# TURNSTILE_SECRET_KEY="your-turnstile-secret-key" 

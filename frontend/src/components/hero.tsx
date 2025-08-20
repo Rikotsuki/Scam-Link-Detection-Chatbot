@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Shield, Search, MessageCircle, AlertTriangle, CheckCircle, XCircle, Bot, Heart, Loader2, ArrowRight } from 'lucide-react'
+import { Shield, Search, MessageCircle, AlertTriangle, CheckCircle, XCircle, Bot, Heart, Loader2, ArrowRight, Crown } from 'lucide-react'
+import Link from 'next/link'
 
 import { DualImageAvatar } from '@/components/image-avatar'
 import { GradientAnimatedDottedLine } from '@/components/animated-dotted-line'
@@ -363,6 +364,37 @@ export const Hero = () => {
                   </Button>
                   </motion.div>
                 </div>
+
+                {/* Anime AI Call-to-Action */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, margin: "-50px" }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Button 
+                    asChild
+                    className="w-full h-20 justify-start gradient-bg text-white shadow-lg hover:shadow-xl group relative overflow-hidden"
+                  >
+                    <Link href="/guardians">
+                      <div className="absolute inset-0 bg-primary/20 group-hover:scale-110 transition-transform duration-500" />
+                      <div className="relative flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-xl bg-white/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <div className="w-8 h-8 bg-secondary rounded-lg flex items-center justify-center">
+                            <Crown className="w-5 h-5 text-white" />
+                          </div>
+                        </div>
+                        <div className="text-left">
+                          <div className="font-bold text-lg">Meet AI Guardians</div>
+                          <div className="text-sm opacity-90">AI-chan & Haru - Your Digital Protectors</div>
+                        </div>
+                        <ArrowRight className="w-6 h-6 ml-auto group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </Link>
+                  </Button>
+                </motion.div>
               </div>
             </Card>
 

@@ -13,7 +13,8 @@ import {
   Menu,
   X,
   ChevronUp,
-  Search
+  Search,
+  Heart
 } from 'lucide-react'
 import Link from 'next/link'
 import { DarkModeToggle } from './dark-mode-toggle'
@@ -22,15 +23,20 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose,
 // Navigation items for mobile menu
 const mobileNavItems = [
   { id: 'home', label: 'Home', icon: Home, href: '/' },
+  { id: 'guardians', label: 'Guardians', icon: Shield, href: '/guardians' },
+  { id: 'ai-chan', label: 'AI-chan', icon: Shield, href: '/ai-chan' },
+  { id: 'haru', label: 'Haru', icon: Heart, href: '/haru' },
   { id: 'features', label: 'Features', icon: Shield, href: '#features' },
   { id: 'scanner', label: 'Scanner', icon: Search, href: '#scanner' },
   { id: 'how-it-works', label: 'How it Works', icon: FileText, href: '#how-it-works' },
-  { id: 'guardians', label: 'Guardians', icon: MessageCircle, href: '#mascot' },
   { id: 'chat', label: 'Chat', icon: MessageCircle, href: '#chat' }
 ]
 
 const desktopNavItems = [
   { label: 'Home', href: '/' },
+  { label: 'Guardians', href: '/guardians' },
+  { label: 'AI-chan', href: '/ai-chan' },
+  { label: 'Haru', href: '/haru' },
   { label: 'Features', href: '#features' },
   { label: 'How it Works', href: '#how-it-works' },
   { label: 'Scanner', href: '#scanner' },
